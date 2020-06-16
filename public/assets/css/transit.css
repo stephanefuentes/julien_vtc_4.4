@@ -1,0 +1,6 @@
+/* css transit  */
+html {
+    scroll-behavior: initial;
+    background: blue;
+    padding: 7rem;
+}

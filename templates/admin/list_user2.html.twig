@@ -1,0 +1,457 @@
+{% extends "base.html.twig" %}
+
+ {% block stylesheets %}
+    <style type="text/css">
+
+    body,  {
+        transition: all 0.5s ease;
+    }
+
+     .table {
+         width: 100%;         
+         overflow-x: auto;
+         /* overflow-y: visible;  */
+     }   
+
+     .thead {
+         font-weight: bold;
+     }   
+
+    .tbody, .thead, .tr {
+        width: 100%;
+    }
+
+     .thead .tr, .tr {
+         display: flex;
+         flex-wrap: nowrap;
+         justify-content: space-between;
+         min-height: 40px;
+     }
+
+     .tr {
+         border-bottom: 1px solid lightgrey;
+         
+         /* position: relative; */
+         transition: opacity 0.4s ease, min-height 0.2s ease, border-bottom 0.2s ease, transform 0.7s ease;
+         /* transition-delay: 0s , 0.3s, 0.2s, 0s;  */
+         
+     } 
+
+     .tbody .tr:nth-child(odd) {
+         background: #f5f5ef;
+         background:#efebe6
+     }
+
+     .tbody .tr:nth-child(even) {
+         background: #e4e1dc;
+     }
+
+        .tr.translate {          
+            transform: translateX(-1000px);  
+            opacity: 0;         
+        }
+
+        .tr.minHeight {          
+            height: 0;
+            min-height: 0;
+            border-bottom: 0;
+        }
+
+
+    .tr-td {
+        z-index: -1;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left:0;
+    }
+
+
+    .td, .th {
+        display: flex;
+        align-items: center;
+        padding: 7px 4px;
+    }
+
+    .td {
+        padding: 7px 4px 7px 10px;
+    }
+
+
+        a.js-supprimer {
+            transition: all 0.3S ease;
+        }
+
+            .scale {
+                transform: scaleY(0);
+            }
+
+        
+
+    .w-10p {
+        width:10%;
+    }
+
+    .w-20p {
+        width:20%;
+    }
+
+    .w-30p {
+        width:30%;
+    }
+
+    .w-40 {
+        width: 40px;
+    }
+
+    .w-60 {
+        width: 60px;
+    }
+
+    .w-80 {
+        width: 80px;
+    }
+
+    .w-99 {
+        width: 100px;
+    }
+
+    .w-120 {
+        width: 120px;
+    }
+
+    .w-160 {
+       width: 160px;
+       min-width: 160px;
+    }
+
+    .w-200 {
+        width: 200px;
+    }
+
+    .w-240 {
+        width: 240px;
+    }
+
+    .w-260 {
+            width: 260px;
+        }
+
+    .w-280 {
+        width: 280px;
+    }
+
+    .fs-12 {
+        font-size: 12px;
+    }
+
+
+
+@media (max-width:991.98px) { 
+
+   
+
+    .tbody {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        justify-content: space-around;               
+    }
+
+    .thead {
+        display: none;
+    }
+
+     .tbody, .thead, .tr {
+        min-width: 0px;
+    }
+
+        .tr {
+            display:block;
+            margin: 40px 10px 0 10px;
+            width: 270px;
+            border-bottom: 1px solid #4a4040;      
+        }
+
+            .td {
+                padding: 3px 0 3px 10px;
+            }
+
+            .td:nth-last-child(-n+2) {
+                display: inline-block;
+            }    
+
+  } /*fin média query */
+
+    </style>
+{% endblock %}
+
+
+
+{% block body %}
+
+    <div class="container">
+
+        <a href="{{ path('home')}}" class="btn btn-info btn-lg mb-5" >Accueil du site</a>
+
+        
+        <div class="form-group col-sm-4"><input class="form-control" name="search" placeholder="search" type="text"></div>
+     
+
+        <div class="table">
+            <div class="thead">
+                <div class="tr">
+                    <div class="th w-99">Nom</div>
+                    <div class="th w-99">Prénom</div>
+                    <div class="th w-160">Téléphone</div>
+                    <div class="th w-280">Email</div>
+                    <div class="th w-80">Inscrit le</div>
+                    <div class="th w-60"></div>
+                    <div class="th w-99"></div>           
+                </div>
+            </div>
+        
+            <div class="tbody">
+
+                {% for user in list_user %}
+                        <div class="tr">
+                            <div class="tr-td"></div>
+                            <div class="td w-99"><span>{{ user.lastName }}</span></div>
+                            <div class="td w-99"><span>{{ user.firstName }}</span></div>
+                            <div class="td w-160"><span>{{ user.phone }}</span></div>
+                            <div class="td w-280"><span>{{ user.email }}</span></div>
+                            <div class="td w-80 fs-12"> {% if user.inscriptionAt is null %}
+                                        non renseignée
+                                    {% else %}
+                                        <span>{{ user.inscriptionAt | date('d/m/Y') | lower }} à {{ user.inscriptionAt | date('H:i') }}</span>
+                                    {% endif %}
+                            </div>
+                            <div class="td w-60">
+                                <a href=" {{ path('admin_edit_user', {'id': user.id}) }}" class="btn btn-primary btn-lg">Editer</a>
+                            </div>
+                            <div class="td w-99">
+                                <a href="{{ path('admin_delete_user', {'id': user.id}) }}" class="btn btn-danger btn-lg js-supprimer">Supprimer</a> 
+                            </div>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Téléphone</th>
+                    <th>Email</th>
+                    <th>Inscrit le</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody> 
+            
+
+                {% for user in list_user %}
+                    <tr>
+                        <td>{{ user.FullName }} </td>
+                        <td>{{ user.phone }} </td>
+                        <td>{{ user.email }} </td>
+                        <td class="h5">
+                            {% if user.inscriptionAt is null %}
+                                non renseignée
+                            {% else %}
+                                {{ user.inscriptionAt | date('d/m/Y') | lower }} à {{ user.inscriptionAt | date('H:i') }}
+                            {% endif %}
+                        </td>
+                        <td><a href=" {{ path('admin_edit_user', {'id': user.id}) }}" class="btn btn-primary btn-lg">Editer</a></td>
+                        <td><a href="{{ path('admin_delete_user', {'id': user.id}) }}" class="btn btn-danger btn-lg js-supprimer" disabled="disabled">Supprimer</a> </td>
+                    </tr>
+                {% endfor %}  #} 
+                {# ******************************************************** #}
+                 {# {% for user in list_user %}
+                    <tr>
+                        <td><div>{{ user.FullName }} </div></td>
+                        <td><div>{{ user.phone }} </div></td>
+                        <td><div>{{ user.email }} </div></td>
+                        <td class="h5"><div>
+                            {% if user.inscriptionAt is null %}
+                                non renseignée
+                            {% else %}
+                                {{ user.inscriptionAt | date('d/m/Y') | lower }} à {{ user.inscriptionAt | date('H:i') }}
+                            {% endif %}</div>
+                        </td>
+                        <td><div><a href=" {{ path('admin_edit_user', {'id': user.id}) }}" class="btn btn-primary btn-lg">Editer</a></div></td>
+                        <td><div><a href="{{ path('admin_delete_user', {'id': user.id}) }}" class="btn btn-danger btn-lg js-supprimer">Supprimer</a> </div></td>
+                    </tr>
+                {% endfor %}#}
+
+                {# ******************************************************** #}
+                
+            {# </tbody>
+
+        </table> #}
+    
+    </div> 
+
+
+
+
+{% endblock %}
+
+
+
+
+
+{% block javascripts %}
+
+    <script>
+   
+        //  *****************************************************************
+        //  *******     INPUT   SEARCHE   **********************************
+        // *******************************************************************
+
+        let search = document.querySelector('input[name="search"]');
+        let tbody = document.getElementsByClassName('tbody')[0];
+        //let indicateur = 0;
+        let tempo;
+
+        search.addEventListener('input', ()=> {
+
+
+            if(tempo)
+            {
+                console.log('j ai une  tempo');
+                clearTimeout(tempo);
+            }
+
+            tempo = setTimeout(()=> {
+ 
+                    let contenu = search.value.trim();
+                    let retour = "";
+                    console.log(contenu);
+
+
+                    $.ajax({
+            
+                        url :' http://localhost:3003/list_user?user='+contenu,
+                        type : 'GET',
+                        dataType : 'json',
+                        success : function(data, statut){
+                            console.log(data);
+
+                            for( let i = 0; i < data.length; i++)
+                            {
+                                retour += '<div class="tr">';
+                                    retour += '<div class="tr-td"></div>';
+                                    retour += '<div class="td w-99">'+data[i].firstName+'</div>';
+                                    retour += '<div class="td w-99">'+data[i].lastName+'</div>';
+                                    retour += '<div class="td w-160">'+data[i].phone+'</div>';
+                                    retour += '<div class="td w-280">'+data[i].email+'</div>';
+                                    retour += '<div class="td w-80 fs-12">'+date(data[i].inscriptionAt)+'</div>';
+                                    retour += '<div class="td w-60"><a href="http://localhost:3003/edit_user/'+data[i].id+'" class="btn btn-primary btn-lg">Editer</a></div>';
+                                    retour += '<div class="td w-99"><a href="http://localhost:4004/delete_user/'+data[i].id+'" class="btn btn-danger btn-lg js-supprimer">Supprimer</a></div>';
+                                retour += '</div>';
+                            }
+
+                            
+                            $('.tbody').fadeOut(200, ()=> {
+                                tbody.innerHTML= " ";
+                                tbody.innerHTML = retour;
+                            });
+                            
+                            $('.tbody').fadeIn(200);
+                                
+                            
+
+
+                        },// fin success
+            
+                        error : function(resultat, statut, erreur){
+                            alert('status '+ statut);
+                        },
+            
+                        complete : function(resultat, statut){
+            
+                        }
+            
+                    });// fin Ajax
+
+            }, 300);
+                                
+
+        });// fin listener search
+        
+
+        // Convertie la date renvoyée en json par symfonie au même format que le format Twig
+        function date(data)
+        {
+            if(data !== null)
+                return data.slice(0, 10).split('-').reverse().join('/')+' à '+ data.slice(11, 16);
+                
+                return 'non renseignée';
+            
+        }
+
+
+
+        //  ************************************************************************
+        //  *************************   SUPPRIMER EN AJAX       *******************
+        //  ************************************************************************
+
+        $('.tbody').on('click', 'a.js-supprimer', function(event) {
+           
+           
+            event.preventDefault();
+
+            // $(this).off('click');
+            //$(this).css('display', 'none');
+
+            let bouton_supprimer = $(this);
+            console.log(bouton_supprimer);
+
+            bouton_supprimer.addClass('scale').parents('.td').siblings('.tr-td').css('z-index','2');
+ 
+            let url = $(this).attr('href');
+
+            let tr = $(this).parents('.tr');
+            
+
+            $.ajax(url)
+                        .done(function (data, text, jqxhr ) {
+                            console.log(data);
+                           
+                            tr.addClass('translate');
+
+                           setTimeout(() => {
+                               tr.addClass('minHeight');
+                           }, 400);
+                            
+                            setTimeout(() => {
+                               tr.remove();
+                            //    tr = null;
+                            },700);                           
+
+                        })
+                        .fail(function (jqxhr, text, errorThrown) {
+                            alert("Un problème est survenu, la suppression n'a pas eu lieu");
+                            bouton_supprimer.removeClass('scale').parents('.td').siblings('.tr-td').css('z-index','-1');
+                            
+                        })
+                        .always(function ( dataJqxhr, textStatus, jqhxrErrorThrown) {
+
+
+                        })
+
+        } );
+        //  ************************************************************************
+        //  *************************   FIN SUPPRESSION AJAX       *******************
+        //  ************************************************************************
+
+
+
+    
+    </script>
+
+{% endblock %}
+

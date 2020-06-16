@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chauffeur VTC{% endblock %}
+
+{% block steph %}
+
+
+    <div class="container" id="formulaire">
+
+        
+            {{ form_start(form) }}
+
+               
+                {{ form_widget(form) }} 
+
+                 <button type="submit" class="btn btn-success btn-lg js-envoi">Envoyer coco</button>
+
+            {{ form_end(form) }}
+
+        
+
+    </div>
+
+    
+    {% block javascripts %}
+        <script>
+
+            let submit = document.getElementsByClassName('js-envoi')[0];
+
+            submit.addEventListener('click', (e)=> {
+
+                //e.preventDefault();
+                alert('ok, j ai cliqué sur envoie');
+
+
+                $.ajax("http://localhost:3003/")
+                        .done(function (data, text, jqxhr ) {
+                           
+                            // for( let i = 0; i < data.length; i++ )
+                            // {
+                            //     document.getElementById('contact_'+data[i][0]).addClass('is-ivalid');
+                            // }
+                            console.log('c est bon , je passe dans "done"');
+                            console.log(data);
+                            alert(data);
+                            
+
+
+                        })
+                        .fail(function (jqxhr, text, errorThrown) {
+                           alert('il y a eu un souci a l envoie du formulaire');
+                            
+                        })
+                        .always(function ( dataJqxhr, textStatus, jqhxrErrorThrown) {
+
+
+                        })
+
+
+
+
+
+
+
+            });
+
+
+
+
+
+
+            console.log("je suis dans le block formulaire");
+        </script>
+
+    {% endblock %}
+
+
+
+{% endblock %}
+
+
+

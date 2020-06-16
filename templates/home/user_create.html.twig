@@ -1,0 +1,59 @@
+{% extends "base.html.twig" %}
+
+{# {% form_theme form 'bootstrap_4_layout.html.twig' %} #}
+
+{% block body %}
+       
+    
+    <div class="container">
+
+        <div class="row">
+            <div class="offset-sm-2 offset-md-0 col">
+                <h1 class="pb-5">Inscription</h1>
+            </div>
+        </div>
+      
+        {{ form_start(form) }}
+
+            <div class="row justify-content-center">
+                <div class="col-sm-8 col-md-6 " >
+                    {{ form_row(form.firstName) }}
+                </div>
+                <div class="col-sm-8 col-md-6">
+                    {{ form_row(form.lastName) }}
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-sm-8 col-md-6 ">
+                    {{ form_row(form.email) }}
+                </div>
+                <div class="col-sm-8 col-md-6">
+                    {{ form_row(form.password) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-8 col-md-6  offset-sm-2 offset-md-0">
+                    {{ form_row(form.phone) }}
+                    <div class="row pt-5">
+                        <div class="col">
+                            
+                                <button class="btn btn-success btn-lg" type="submit">Enregistrer</button>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            
+
+            {# {{ form_widget(form) }} #}
+            
+            {{ form_end(form) }}
+
+    </div>
+{% endblock %}
+
+

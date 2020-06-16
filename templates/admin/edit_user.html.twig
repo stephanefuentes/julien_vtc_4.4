@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+
+    <div class="container">
+
+        <a href="{{ path('home') }}" class="btn btn-info btn-lg">Acuueil du site</a>
+
+
+        {{ form_start(form)}}
+
+            {{ form_row(form.firstName) }}
+
+            {{ form_row(form.lastName)}}
+
+            {{ form_row(form.email) }}
+
+            {{  form_row(form.phone) }}
+
+
+            {# <div class="row">
+                {{ form_row(form.password) }}
+            </div> #}
+            
+
+            <button class="btn btn-success btn-lg">Modifier</button>
+
+        {{ form_end(form)}}
+
+
+    </div>
+
+{% endblock %}

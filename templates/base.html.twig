@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}chauffeur VTC{% endblock %}</title>
+        {% block stylesheets %}
+           
+        {% endblock %}
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="description" content="Chauffeur VTC sur MARSEILLE et sur toute la region PACA, mise à diposition de véhicule avec chauffeur en toute sécurité, pour particulier ou professionnel .." />
+        
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="../assets/css/normalize.css">
+        <link rel="stylesheet" href="../assets/css/main.css">
+        <link id="transit" rel="stylesheet alternate" href="../assets/css/transit.css">
+
+        <script src="https://kit.fontawesome.com/7f87a5f8d6.js" crossorigin="anonymous"></script>
+
+
+    </head>
+        
+   {% block body %} 
+<body>
+    <header id="logo">
+       
+        
+        <div class="nav-bar">
+
+            <nav>
+               
+                <a class="logo" href="#logo"><img src="../assets/logo/logo_blanc.svg" alt="logo de cab elite"></a> 
+                <ul>
+
+                    
+                     
+                     {% if app.user %}
+                     <li>
+                        <a href="{{ path('security_logout') }}">Deconnexion</a>
+                    </li>
+
+                     {% else %}
+                     
+                     <li>
+                        <a href="{{ path('security_login') }}">Connexion</a>
+                    </li>
+
+                    
+                     {# <li>
+                        <a href="{{ path('user_create') }}">Inscription</a>
+                    </li> #}
+                    {% endif %}
+
+                    <li>
+                        <a class="active" href="#logo">Accueil</a>
+                    </li><!--
+
+
+                    --><li>
+                        <a href="#accueil">A propos</a>
+                    </li><!--
+                
+                --><li>
+                        <a href="#footer">Contact</a>
+                    </li>
+                </ul> 
+            </nav>
+
+        </div>
+
+
+    </header>
+
+    <main id="accueil">
+        <section class="main">
+            
+            <h1 class="mainH1">Cab elite Service et Transport</h1>
+            <h1 class="mainH1">location de véhicule avec chauffeur</h1>
+
+            <article>
+                <h1>CAB ELITE Transport</h1>
+                <p>Cab élite vous proposes de louer ses <strong>véhicules avec chauffeur</strong> pour des déplacement <strong>toutes distances</strong>  sur <strong>MARSEILLE</strong> et la  <strong>région PACA</strong>.
+                     </p>
+                     <p>Nos véhicules sont récents et modernes , vous apportant ainsi tout le confort nécessaire quelque soit la durée de vos déplacement</p>
+                     <p>Nos <strong>chauffeurs</strong> sont aguerris, vous assurant ainsi un maximun de <strong>sécurité</strong> pour tout vos trajets </p>
+                     <p><strong>Professionnels et réglementés</strong>, tous nos services sont de <strong>qualité</strong> pour l'entière satisfaction de nos clients</p>
+            </article>
+            <div class="border"></div>
+            <article>
+                <h1>CAB ELITE Service</h1>
+                <p>Vous avez besoin d'aller <strong>récupérer un colis</strong>, Cab élite peut aller le récupérer pour vous et le ramenez à votre domicile </p>
+                <p>Inversement, vous aimeriez <strong>déposer un colis</strong>, CAB élite peut venir le récupérer pour l'enmener à la destination de votre choix</p>
+                
+            </article>
+
+
+
+        </section>
+
+    {% block steph %} {% endblock %}
+
+
+    </main>
+
+    <footer>
+        <div class="footer" id="footer">
+            <section class="footer">
+                <h2>Contactez nous directement et gratuitement </h2>
+                
+                    <a href="tel:0617767867">
+                        <i class="fas fa-phone-alt"></i>06 17 76 78 67
+                    </a>
+                
+            </section>
+        </div>
+    </footer>
+
+{% endblock %}
+
+
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/fonction.js"></script>
+    <script src="../assets/js/main.js"></script>
+
+
+
+
+
+
+        {% block javascripts %}
+        
+        {% endblock %}
+    </body>
+</html>

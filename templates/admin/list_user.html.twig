@@ -1,0 +1,360 @@
+{% extends "base.html.twig" %}
+
+ {% block stylesheets %}
+    <style type="text/css">
+
+
+     .table {
+         width: 100%;
+         overflow-x: auto;
+         overflow-y: visible; 
+     }   
+
+     .thead {
+         font-weight: bold;
+     }   
+
+    .tbody, .thead {
+        min-width: 700px;
+    }
+
+     .tr-td, .thead .tr {
+         display: flex;
+         flex-wrap: nowrap;
+     }
+
+     .tr {
+         border-bottom: 1px solid lightgrey;
+         min-height: 40px;
+         position: relative;
+         transition: min-height 0.2s ease, border-bottom 0.1s ease;
+         transition-delay: 0.4s, 0.5s;
+         
+     } 
+
+     .tr.minHeight0 {
+         /* transform: scaleY(0); */
+         min-height: 0;
+         border-bottom: 1px solid transparent;
+     }
+
+        .tr-td {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left:0;
+            transition: opacity 0.7s ease, transform 0.7s ease;
+            /* transition-delay: 0, 1.5s; */
+            
+        }
+
+
+        .tr-td.opacity0 {
+            opacity: 0;
+            transform: translateX(-1000px);           
+        }
+
+    .td, .th {
+        display: flex;
+        align-items: center;
+        padding: 7px 4px;
+    }
+
+
+    .w-10p {
+        width:10%;
+    }
+
+    .w-20p {
+        width:20%;
+    }
+
+    .w-30p {
+        width:30%;
+    }
+
+    .w-40 {
+        width: 40px;
+    }
+
+    .w-60 {
+        width: 60px;
+    }
+
+    .w-80 {
+        width: 80px;
+    }
+
+    .w-120 {
+        width: 120px;
+    }
+
+    .w-160 {
+       width: 160px;
+    }
+
+    .w-200 {
+        width: 200px;
+    }
+
+    .w-240 {
+        width: 240px;
+    }
+
+    .fs-12 {
+        font-size: 12px;
+    }
+    </style>
+{% endblock %}
+
+
+
+{% block body %}
+
+    <div class="container">
+
+        <a href="{{ path('home')}}" class="btn btn-info btn-lg mb-5" >Accuiel du site</a>
+
+        
+        <div class="form-group col-md-4"><input class="form-control" name="search" placeholder="search" type="text"></div>
+     
+
+        <div class="table">
+            <div class="thead">
+                <div class="tr">
+                    <div class="th w-160">Nom</div>
+                    <div class="th w-160">Téléphone</div>
+                    <div class="th w-240">Email</div>
+                    <div class="th w-160">Inscrit le</div>
+                    <div class="th w-80"></div>
+                    <div class="th w-80"></div>           
+                </div>
+            </div>
+        
+            <div class="tbody">
+
+                {% for user in list_user %}
+                        <div class="tr">
+                    <div class="tr-td">
+                            <div class="td w-160">{{ user.FullName }}</div>
+                            <div class="td w-160">{{ user.phone }}</div>
+                            <div class="td w-240">{{ user.email }}</div>
+                            <div class="td w-160 fs-12"> {% if user.inscriptionAt is null %}
+                                        non renseignée
+                                    {% else %}
+                                        {{ user.inscriptionAt | date('d/m/Y') | lower }} à {{ user.inscriptionAt | date('H:i') }}
+                                    {% endif %}
+                            </div>
+                            <div class="td w-80">
+                                <a href=" {{ path('admin_edit_user', {'id': user.id}) }}" class="btn btn-primary btn-lg">Editer</a>
+                            </div>
+                            <div class="td w-80">
+                                <a href="{{ path('admin_delete_user', {'id': user.id}) }}" class="btn btn-danger btn-lg js-supprimer">Supprimer</a> 
+                            </div>
+                    </div>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Téléphone</th>
+                    <th>Email</th>
+                    <th>Inscrit le</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody> 
+            
+
+                {% for user in list_user %}
+                    <tr>
+                        <td>{{ user.FullName }} </td>
+                        <td>{{ user.phone }} </td>
+                        <td>{{ user.email }} </td>
+                        <td class="h5">
+                            {% if user.inscriptionAt is null %}
+                                non renseignée
+                            {% else %}
+                                {{ user.inscriptionAt | date('d/m/Y') | lower }} à {{ user.inscriptionAt | date('H:i') }}
+                            {% endif %}
+                        </td>
+                        <td><a href=" {{ path('admin_edit_user', {'id': user.id}) }}" class="btn btn-primary btn-lg">Editer</a></td>
+                        <td><a href="{{ path('admin_delete_user', {'id': user.id}) }}" class="btn btn-danger btn-lg js-supprimer" disabled="disabled">Supprimer</a> </td>
+                    </tr>
+                {% endfor %}  #} 
+                {# ******************************************************** #}
+                 {# {% for user in list_user %}
+                    <tr>
+                        <td><div>{{ user.FullName }} </div></td>
+                        <td><div>{{ user.phone }} </div></td>
+                        <td><div>{{ user.email }} </div></td>
+                        <td class="h5"><div>
+                            {% if user.inscriptionAt is null %}
+                                non renseignée
+                            {% else %}
+                                {{ user.inscriptionAt | date('d/m/Y') | lower }} à {{ user.inscriptionAt | date('H:i') }}
+                            {% endif %}</div>
+                        </td>
+                        <td><div><a href=" {{ path('admin_edit_user', {'id': user.id}) }}" class="btn btn-primary btn-lg">Editer</a></div></td>
+                        <td><div><a href="{{ path('admin_delete_user', {'id': user.id}) }}" class="btn btn-danger btn-lg js-supprimer">Supprimer</a> </div></td>
+                    </tr>
+                {% endfor %}#}
+
+                {# ******************************************************** #}
+                
+            {# </tbody>
+
+        </table> #}
+    
+    </div> 
+
+
+
+
+{% endblock %}
+
+
+
+
+
+{% block javascripts %}
+
+    <script>
+   
+        //  *****************************************************************
+        //  *******     INPUT   SEARCHE   **********************************
+        // *******************************************************************
+
+        let search = document.querySelector('input[name="search"]');
+        let tbody = document.getElementsByTagName('tbody')[0];
+        let go = 0;
+
+        search.addEventListener('input', ()=> {
+
+         
+            let contenu = search.value.trim();
+            let retour = "";
+            console.log(contenu);
+
+
+
+            $.ajax({
+    
+                url :' http://localhost:3000/list_user?user='+contenu,
+                type : 'GET',
+                dataType : 'json',
+                success : function(data, statut){
+                    console.log(data);
+
+                    for( let i = 0; i < data.length; i++)
+                    {
+                        retour += '<tr>';
+                            retour += '<td>'+data[i].fullName+'</td>';
+                            retour += '<td>'+data[i].phone+'</td>';
+                            retour += '<td>'+data[i].email+'</td>';
+                            retour += '<td class="h5 pt-3">'+date(data[i].inscriptionAt)+'</td>';
+                            retour += '<td><a href="http://localhost:3000/edit_user/'+data[i].id+'" class="btn btn-primary btn-lg">Editer</a></td>';
+                            retour += '<td><a href="http://localhost:3000/delete_user/'+data[i].id+'" class="btn btn-danger btn-lg js-supprimer">Supprimer</a></td>';
+                        retour += '</tr>';
+                    }
+
+                    
+                    $('tbody').fadeOut(200, ()=> {
+                        tbody.innerHTML= " ";
+                        tbody.innerHTML = retour;
+                    });
+                    
+                    $('tbody').fadeIn(200);
+                        
+                    
+
+
+                },// fin success
+    
+                error : function(resultat, statut, erreur){
+                    alert('status '+ statut);
+                },
+    
+                complete : function(resultat, statut){
+    
+                }
+    
+            });// fin Ajax
+
+           
+
+        });// fin listener search
+
+
+        // Convertie la date renvoyée en json par symfonie au même format que le format Twig
+        function date(data)
+        {
+            if(data !== null)
+                return data.slice(0, 10).split('-').reverse().join('/')+' à '+ data.slice(11, 16);
+                
+                return 'non renseignée';
+            
+        }
+
+
+
+        //  ************************************************************************
+        //  *************************   SUPPRIMER EN AJAX       *******************
+        //  ************************************************************************
+
+        $('.tbody').on('click', 'a.js-supprimer', function(event) {
+           
+           
+            event.preventDefault();
+
+            // $(this).off('click');
+            //$(this).css('display', 'none');
+        
+            let $a = $(this);
+
+            // $a.off('click');
+            
+            let url = $(this).attr('href');
+            // $a.attr('href', '');
+            
+
+            $.ajax(url)
+                        .done(function (data, text, jqxhr ) {
+                            console.log(data);
+                            // $a.parents('.tr-td:last-child').css('display', 'block');
+                            $a.parents('.tr-td').addClass('opacity0');
+                            
+                            $a.parents('.tr').addClass('minHeight0');
+                            setTimeout(() => {
+                                $a.parents('.tr').css('display','none')
+                            },600);
+                            //$a.parents('tr').fadeOut();
+
+
+                        })
+                        .fail(function (jqxhr, text, errorThrown) {
+
+                        })
+                        .always(function ( dataJqxhr, textStatus, jqhxrErrorThrown) {
+
+
+                        })
+
+        } );
+        //  ************************************************************************
+        //  *************************   FIN SUPPRESSION AJAX       *******************
+        //  ************************************************************************
+
+
+
+    
+    </script>
+
+{% endblock %}
+
