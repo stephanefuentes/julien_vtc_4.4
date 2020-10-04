@@ -51,7 +51,9 @@ class ContactType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Contact::class,
+            'data_class' => Contact::class
+            //'csrf_protection' => false, // rajouté pour désactiver le jeton
+           // "allow_extra_fields" => true    // rajouté pour autoriser les extra fields
         ]);
     }
 }

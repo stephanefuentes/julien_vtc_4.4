@@ -3,7 +3,7 @@
  {% block stylesheets %}
     <style type="text/css">
 
-    body,  {
+    body {
         transition: all 0.5s ease;
     }
 
@@ -350,7 +350,7 @@
                                     retour += '<div class="td w-280">'+data[i].email+'</div>';
                                     retour += '<div class="td w-80 fs-12">'+date(data[i].inscriptionAt)+'</div>';
                                     retour += '<div class="td w-60"><a href="http://localhost:3003/edit_user/'+data[i].id+'" class="btn btn-primary btn-lg">Editer</a></div>';
-                                    retour += '<div class="td w-99"><a href="http://localhost:4004/delete_user/'+data[i].id+'" class="btn btn-danger btn-lg js-supprimer">Supprimer</a></div>';
+                                    retour += '<div class="td w-99"><a href="http://localhost:3003/delete_user/'+data[i].id+'" class="btn btn-danger btn-lg js-supprimer">Supprimer</a></div>';
                                 retour += '</div>';
                             }
 

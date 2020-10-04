@@ -2,6 +2,24 @@
 
 {% block title %}Chauffeur VTC{% endblock %}
 
+ {% block stylesheets %}
+     <style type="text/css">
+
+        body, html {
+            transition: all 0.5s ease;
+        }
+
+        #form-ok {
+            position: absolute;
+            top: 0;
+            /*left: 0;   */
+            height: 100px;
+            width; 100%;
+        }
+
+    </style>
+ {% endblock %}
+
 {% block steph %}
 
 
@@ -26,23 +44,133 @@
         <script>
 
             let submit = document.getElementsByClassName('js-envoi')[0];
+            let form = $('form');
+
+            // let divSuccess = document.createElement('div');
+            //     divSuccess.classList.add('alert');
+            //     divSuccess.classList.add('alert-success');
+            //     divSuccess.innerText = 'le message a bien été envoyé';
+
+            //     submit.appendChild(divSuccess);
+
+            form.append('<div id="form-ok" class="alert alert-success text-center">Le message a bien été envoyé</div>');
+
+           //$('#form-ok').css({"position": "absolute", "top": "0", "left": "0"});
+           
 
             submit.addEventListener('click', (e)=> {
 
-                //e.preventDefault();
-                alert('ok, j ai cliqué sur envoie');
+                e.preventDefault();
+                //alert('ok, j ai cliqué sur envoie');
+
+                let span_formulaire = document.querySelectorAll('form label > span');
+                let input_formulaire = document.querySelectorAll('form .is-invalid');
+
+                if(span_formulaire)
+                {
+                    for(let i = 0; i < span_formulaire.length; i++)
+                    {
+                        span_formulaire[i].parentNode.removeChild(span_formulaire[i]);
+                        input_formulaire[i].classList.remove('is-invalid');
+                    }
+                    
+                    
+                }
+
+               
+                // $.ajax({
+                //     url: 'http://localhost:3003/get-token',
+                //     type: 'GET',
+                //     error: function(){console.log('error');},
+                //     success: function(tokenResponse)
+                //     {
+                //         //var token = tokenResponse.token;
+                //         alert('j ai récuperer tohek :' + tokenResponse);
+                //     }
+                // });
 
 
-                $.ajax("http://localhost:3003/")
+                 let dataForm = form.serializeArray();
+                console.log(dataForm);
+
+                
+                var a = dataForm;
+                var data_formulaire = {};
+
+
+                $.each(a, function() {
+                    if (data_formulaire[this.name]) {
+                        if (!data_formulaire[this.name].push) {
+                            data_formulaire[this.name] = [data_formulaire[this.name]];
+                        }
+                        data_formulaire[this.name].push(this.value || '');
+                    } else {
+                        data_formulaire[this.name] = this.value || '';
+                    }
+                });
+                data_formulaire = JSON.stringify(data_formulaire);
+                console.log(data_formulaire);
+               
+            
+               // alert('stop');
+
+                $.post("http://localhost:3003/fomulaire_ajax",data_formulaire)
                         .done(function (data, text, jqxhr ) {
                            
-                            // for( let i = 0; i < data.length; i++ )
-                            // {
-                            //     document.getElementById('contact_'+data[i][0]).addClass('is-ivalid');
-                            // }
+                          
                             console.log('c est bon , je passe dans "done"');
+                           
+
+                            for ( let i = 0; i < data.length; i++)
+                            {
+                                //  input concerné par l'erreur
+                                document.getElementById('contact_'+data[i][0]).classList.add('is-invalid');
+
+                                // label lié à l'input
+                                let label =  document.getElementById('contact_'+data[i][0]).previousSibling;
+                                    
+                                let spanInv = document.createElement('span');
+                                spanInv.classList.add('invalid-feedback');
+                                spanInv.classList.add('d-block');
+
+                                for( let j = 0; j < (data[i].length - 1); j++)
+                                {
+
+                                    if( (data[i][j].length-1) > 1 && data[i][j+1].indexOf('renseigné') > 0 )
+                                    {
+                                       j++;
+                                    }
+
+                                    let spanDblock = document.createElement('span');
+                                        spanDblock.classList.add('d-block');
+
+                                        let span = document.createElement('span');
+                                            span.classList.add('form-error-icon');
+                                            span.classList.add('badge');
+                                            span.classList.add('badge-danger');
+                                            span.classList.add('text-uppercase');
+                                            span.innerText = "error";
+
+                                        let spanMessage = document.createElement('span');
+                                            spanMessage.classList.add('form-error-message');
+                                            spanMessage.innerText = " "+" "+data[i][j+1];
+
+                                    spanDblock.appendChild(span);
+                                    spanDblock.appendChild(spanMessage);
+                                    spanInv.appendChild(spanDblock);
+
+                                }
+
+
+                                label.appendChild(spanInv);
+
+
+                            }
+
+
+
                             console.log(data);
-                            alert(data);
+                           // alert(data);
                             
 
 

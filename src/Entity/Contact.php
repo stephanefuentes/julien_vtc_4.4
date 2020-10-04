@@ -19,17 +19,21 @@ class Contact
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le champ doit être renseigné")
      * @Assert\Length(min=4, minMessage="le prenom doit contenir au moins 4 caracteres")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le champ doit être renseigné")
+     * @Assert\Length(min=4, minMessage="le nom doit contenir au moins 4 caracteres")
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le champ doit être renseigné")
      * @Assert\Length(min=8, minMessage="le mail doit contenir au moins 8 caracteres")
      * @Assert\Email(
      *     message = "Le mmail '{{ value }}' n'est pas un mail valide.",
@@ -40,6 +44,8 @@ class Contact
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Le champ doit être renseigné")
+     * @Assert\Length(min=4, minMessage="le commntaire doit contenir au moins 20 caracteres")
      */
     private $commentaire;
 
